@@ -1,0 +1,11 @@
+@extends('layouts.frontend.master')
+@section('content')
+    @include('frontend.includes.slider')
+    @include('frontend.includes.featured')
+    @include('frontend.includes.category')
+    @include('frontend.includes.offer')
+    @include('frontend.includes.brands_products')
+    @include('frontend.includes.subscribe')
+    @include('frontend.includes.products')
+    @include('frontend.includes.vendor')
+@endsection
