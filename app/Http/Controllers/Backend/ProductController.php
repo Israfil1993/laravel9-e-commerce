@@ -80,7 +80,7 @@ class ProductController extends Controller
     public function edit(Request $request,$id)
     {
         $product = Product::find($id);
-        $category = Category::all();
+        $category = Category::with('children')->get();
         return view ('backend.pages.product.edit', compact('product','category'));
     }
 
@@ -114,12 +114,13 @@ class ProductController extends Controller
 
     }
 
-    public function delete( Request $request,$id)
+    public function delete( Request $request)
     {
         //$request->validate(['id' => ['required', 'integer', "exists:products"]]);
         //dd($request->all());
         $productId = $request->id;
         Product::where("id", $productId)->delete();
+        //dd($request->all());
         return redirect()->route('backend.product.index')->with('success', 'Product silindi');
     }
 

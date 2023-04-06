@@ -37,16 +37,17 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Category</label>
-                                <select class="form-control " select2 name="category_id" style="width: 100%;" >
+                                <label >Category</label>
 
+                                <select class="form-control select2" name="category_id" style="width: 100%;">
                                     @foreach($category as $rs)
-                                        <option  value="{{ $rs->id }}" @if($rs->id == $product->category_id) selected="selected" @endif>{{ $rs->title }}</option>
-
+                                        <option value="{{$rs->id}}"  @if ($rs->id == $product->parent_id)  selected="selected"  @endif >
+                                            {{ \App\Http\Controllers\Backend\CategoryController::getParentsTree($rs, $rs->title) }}
+                                        </option>
                                     @endforeach
-
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label>Title</label>
                                 <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$product->title}}">
@@ -123,6 +124,7 @@
                             <button type="submit" class="btn btn-outline-primary">Save</button>
                             <a href="{{ route('backend.product.index') }}" type="submit" class="btn btn-outline-danger">Back</a>
                         </div>
+
 
                     </form>
 

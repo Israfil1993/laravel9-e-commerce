@@ -13,17 +13,19 @@ class CategoryController extends Controller
 
     public static function getParentsTree($category, $title)
     {
-        if ($category->parent_id == 0)
+        if ($category == null || $category->parent_id == 0)
         {
             return $title;
         }
 
-            $parent = Category::find($category->parent_id);
-            $title = $parent->title.' -> '.$title;
-            return CategoryController::getParentsTree($parent, $title);
+        $parent = Category::find($category->parent_id);
+        if ($parent == null) {
+            return $title;
+        }
 
+        $title = $parent->title . ' -> ' . $title;
+        return CategoryController::getParentsTree($parent, $title);
     }
-
 
 
     public function index(Request $request)

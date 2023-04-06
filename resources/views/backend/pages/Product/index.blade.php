@@ -49,7 +49,7 @@
                                             <tr class="odd">
                                                 @foreach($product as $rs)
                                                     <td class="dtr-control" tabindex="0">{{ $rs->id }}</td>
-                                                    <td style="">{{ \App\Http\Controllers\Backend\CategoryController::getParentsTree($rs->category, $rs->category->title ) }}</td>
+                                                    <td style="">{{ \App\Http\Controllers\Backend\CategoryController::getParentsTree($rs->category ?? null, $rs->category->title ?? '') }}</td>
                                                     <td style="">{{ $rs->title}}</td>
                                                     <td style="">{{ $rs->quantity}}</td>
                                                     <td style="">{{ $rs->price }}</td>

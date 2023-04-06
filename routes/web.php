@@ -1,13 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Backend\HomeController as AdminHomeController;
-use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ImageGalleryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\HomeController as AdminHomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
