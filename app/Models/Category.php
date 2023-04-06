@@ -24,32 +24,28 @@ class Category extends Model
     protected $appends = ['parent'];
 
     public function parent()
-
     {
-
         return $this->belongsTo(Category::class,'parent_id');
-
     }
 
     public function children()
     {
-
         return $this->hasMany(Category::class, 'parent_id');
     }
 
 
-    public function parentCategory():HasOne
-    {
-        return $this->hasOne(Category::class, "id", "parent_id");
-    }
-
-
-
-    public function products()
-    {
-
+    public function product() {
         return $this->hasMany(Product::class);
     }
+
+
+    /*
+      public function parentCategory():HasOne
+        {
+            return $this->hasOne(Category::class, "id", "parent_id");
+        }
+    */
+
 
 
 }

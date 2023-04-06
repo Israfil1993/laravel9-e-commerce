@@ -49,7 +49,7 @@
                                             <tr class="odd">
                                                 @foreach($product as $rs)
                                                     <td class="dtr-control" tabindex="0">{{ $rs->id }}</td>
-                                                    <td class="sorting_1">{{ $rs->category_id}}</td>
+                                                    <td style="">{{ \App\Http\Controllers\Backend\CategoryController::getParentsTree($rs->category, $rs->category->title ) }}</td>
                                                     <td style="">{{ $rs->title}}</td>
                                                     <td style="">{{ $rs->quantity}}</td>
                                                     <td style="">{{ $rs->price }}</td>
@@ -62,7 +62,7 @@
                                                     </td>
 
                                                 <td style="">
-                                                    <a href="{{ route('backend.images.create',['pid'=>$rs->id]) }}" ><img src="{{ asset('assets/backend/img/gallery.png') }}" height="40" alt=""></a>
+                                                    <a href="{{ route('backend.images.index',['pid'=>$rs->id]) }}" ><img src="{{ asset('assets/backend/img/gallery.png') }}" height="40" alt=""></a>
 
 
 

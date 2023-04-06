@@ -32,9 +32,6 @@
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Id</th>
                                                 <th class="sorting sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" aria-sort="descending">Parent_Id</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Title</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="">Keywords</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="">Description</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Slug</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Status</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Actions</th>
 
@@ -47,11 +44,8 @@
                                             <tr class="odd">
                                                 @foreach($category as $rs)
                                                     <td class="dtr-control" tabindex="0">{{ $rs->id }}</td>
-                                                    <td class="sorting_1">{{ $rs->parent_id }}</td>
+                                                    <td class="sorting_1">{{ \App\Http\Controllers\Backend\CategoryController::getParentsTree($rs, $rs->title) }}</td>
                                                     <td style="">{{ $rs->title}}</td>
-                                                    <td style="">{{ $rs->keywords}}</td>
-                                                    <td style="">{{ $rs->description }}</td>
-                                                    <td style="">{{ $rs->slug }}</td>
                                                     <td style="">{{ $rs->status }}</td>
 
 

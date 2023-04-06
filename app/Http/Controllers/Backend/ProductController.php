@@ -14,17 +14,17 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product = Product::paginate(5);
-        // dd($product->all());
+        $product = Product::paginate(20);
+        //dd($product->all());
         return view('backend.pages.product.index', compact('product'));
     }
 
 
     public function create()
     {
-        $product = Product::get();
-        $category = Category::get();
-        return view('backend.pages.product.create', compact('product', 'category'));
+        //$product = Product::get();
+        $category = Category::with('children')->orderBy('title','DESC')->get();
+        return view('backend.pages.product.create', compact( 'category'));
     }
 
 
@@ -38,28 +38,16 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $data->image = Storage::putFile('images', $request->file('image'));
         }
-
         /*
                  if(!is_null($request->image))
                  {
                      $imageFile = $request->file("image");
-
-
                      $originalName = $imageFile->getClientOriginalName();
-
-
                      $originalExtension = $imageFile->getClientOriginalExtension();
-
                      $explodeName = explode(".", $originalName)[0];
-
                      $fileName = ($explodeName) . "." . $originalExtension;
-
-
                      $folder = "product";
-
                      $publicPath = "storage/" . $folder;
-
-
                      if (file_exists(public_path($publicPath . $fileName)))
                      {
                          dd($request->all());
@@ -69,9 +57,6 @@ class ProductController extends Controller
                                  'image' => "Eyni şəkil daha əvvəl yüklənib."
                              ]);
                      }
-
-
-
                  }
         */
 
@@ -118,40 +103,22 @@ class ProductController extends Controller
         $data->tax = $request->tax;
         $data->detail = $request->detail;
         $data->status = $request->status;
-        dd($request->all());
+        //dd($request->all());
         if ($data->save()) {
-
-
             return redirect()->back()->with('success', 'Product əlave edildi');
-        } else {
-
+        } else
+        {
             return redirect()->back()->with('error', 'Xəta baş verdi Product əlavə edilmədi');
-
-
         }
         return view ('backend.pages.product.index');
 
     }
 
-
-
-
-
-
-
-
-
-
-
     public function delete( Request $request,$id)
     {
-
         //$request->validate(['id' => ['required', 'integer', "exists:products"]]);
-       // dd($request->all());
-
+        //dd($request->all());
         $productId = $request->id;
-
-
         Product::where("id", $productId)->delete();
         return redirect()->route('backend.product.index')->with('success', 'Product silindi');
     }

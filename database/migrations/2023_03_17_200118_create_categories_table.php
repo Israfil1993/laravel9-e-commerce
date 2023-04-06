@@ -23,12 +23,13 @@ return new class extends Migration
             $table->boolean('status')->default(false);
             $table->timestamps();
 
-
+/*
             $table->foreign('parent_id')
                 ->references('id')
                 ->on('categories')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+*/
         });
     }
 

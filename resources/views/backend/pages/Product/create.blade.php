@@ -42,7 +42,7 @@
                                 <select class="form-control " select2 name="category_id" style="width: 100%;" >
 
                                     @foreach($category as $rs)
-                                        <option value="{{ $rs->id }}">{{ $rs->title }}</option>
+                                        <option value="{{ $rs->id }}">{{ \App\Http\Controllers\Backend\CategoryController::getParentsTree($rs, $rs->title) }}</option>
                                     @endforeach
 
                                 </select>
@@ -63,10 +63,7 @@
                                 <label>Image</label>
                                 <input type="file" class="form-control @error('title') is-invalid @enderror" name="image" >
                             </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <input type="number" class="form-control @error('title') is-invalid @enderror" name="category_id">
-                            </div>
+
                             <div class="form-group">
                                 <label>User</label>
                                 <input type="number" class="form-control @error('title') is-invalid @enderror" name="user_id">

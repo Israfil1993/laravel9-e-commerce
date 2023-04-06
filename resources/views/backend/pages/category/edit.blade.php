@@ -36,14 +36,15 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Parent</label>
-                                <select class="form-control select2 @error('parent_id') is-invalid @enderror" name="parent_id" style="width: 100%;" >
-                                    <option value="{{ $category->parent_id }}" selected="selected" ></option>
-                                    <option value="0" >Main Category</option>
+                                <select class="form-control select2" name="parent_id" style="width: 100%;">
+                                    <option value="0" selected="selected">Main Category</option>
                                     @foreach($categoryList as $rs)
-                                        <option  value="{{ $rs->id }}" @if($rs->id == $category->parent_id) selected="selected" @endif>{{ $rs->title }}</option>
+                                        <option value="{{$rs->id}}"  @if ($rs->id ==  $category->parent_id)  selected="selected"  @endif >
+                                            {{ \App\Http\Controllers\Backend\CategoryController::getParentsTree($rs, $rs->title) }}
+                                        </option>
                                     @endforeach
-
                                 </select>
+
                             </div>
                             <div class="form-group">
                                 <label>Title</label>
@@ -57,15 +58,12 @@
                                 <label >Description</label>
                                 <input type="text" class="form-control @error('description') is-invalid @enderror" name="description"  value="{{$category->description}}">
                             </div>
-                            <div class="form-group">
-                                <label>Status</label>
-                                <select class="form-control select2 " name="status" style="width: 100%;">
-                                    <option selected="selected"  value="{{ $category->status }}" ></option>
 
-                                    <option value="False">False</option>
-                                    <option  value="True">True</option>
-
-                                </select>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="status" value="1" id="status" {{ isset($category) && $category->status  ? "checked" : "" }}>
+                                <label class="form-check-label" for="status">
+                                    Should the category be visible on the site?
+                                </label>
                             </div>
 
 

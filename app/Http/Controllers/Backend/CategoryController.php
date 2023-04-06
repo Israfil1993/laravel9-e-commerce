@@ -9,9 +9,26 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    protected $appends = ['getPrentsTree'];
+
+    public static function getParentsTree($category, $title)
+    {
+        if ($category->parent_id == 0)
+        {
+            return $title;
+        }
+
+            $parent = Category::find($category->parent_id);
+            $title = $parent->title.' -> '.$title;
+            return CategoryController::getParentsTree($parent, $title);
+
+    }
+
+
+
     public function index(Request $request)
     {
-        $category = Category::with(["parentCategory:id"])->paginate(5);
+        $category = Category::with("children")->paginate(5);
         //$categories = Category::with(["parentCategory:id"]);
      // dd($category->all());
         return view('backend.pages.category.index', compact('category'));
@@ -19,20 +36,25 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $category = Category::where('parent_id','=','0')->get();
+
+
+        //$category = Category::where('parent_id','=','0')->get();
+        $category = Category::with('children')->get();
         return view ('backend.pages.category.create',compact('category'));
+
     }
 
     public function store(CategoryRequest $request)
     {
         $data = new Category();
-        $data->parent_id = $request->parent_id  ;
+        $data->parent_id = $request->parent_id ;
         $data->title = $request->title;
         $data->keywords = $request->keywords;
         $data->description = $request->description;
         $data->status = $request->status;
-        dd($request->all());
+        //dd($request->all());
         if ($data->save()){
+            //dd('if');
             return redirect()->back()->with('success','Category əlave edildi');
         }else {
             return redirect()->back()->with('error','Xəta baş verdi categoryəlavə edilmədi');
@@ -52,11 +74,11 @@ class CategoryController extends Controller
     public function update(Request $request)
     {
         $category = Category::findOrFail($request->id);
-        $category->parent_id = $request->parent_id;
-        $category->title = $request->title;
-        $category->keywords = $request->keywords;
+        $category->parent_id   = $request->parent_id;
+        $category->title       = $request->title;
+        $category->keywords    = $request->keywords;
         $category->description = $request->description;
-        $category->status = $request->status ? 1 : 0;
+        $category->status      = $request->status ? 1 : 0;
         if ($category->save())
         {
             return redirect()->back()->with('success','Kateqoriya redaktə edildi');
